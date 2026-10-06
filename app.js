@@ -243,3 +243,6 @@ document.addEventListener('DOMContentLoaded', () => { renderChrome(); reveal(); 
     new MutationObserver(() => requestAnimationFrame(scan)).observe(document.body, { childList: true, subtree: true });
   });
 })();
+
+/* Markér at prototypen er åbnet, så forsiden ikke sender videre til Exclusive igen */
+try { sessionStorage.setItem('dx-seen', '1'); } catch (e) {}
