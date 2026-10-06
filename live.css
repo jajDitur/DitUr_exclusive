@@ -645,3 +645,17 @@ html.dx-intro:not(.dx-intro-open) body { overflow: hidden; }
   .hx-full::after { inset: 0 0 auto; height: 240px; background: linear-gradient(0deg, #dfe7ee, rgba(223,231,238,0) 35%); }
   .hx-full .hx-copy { padding: 8px 24px 36px; height: auto; }
 }
+
+/* Mobil-finpudsning */
+@media (max-width: 760px) {
+  /* Exclusive-hero: billedet står klart øverst, teksten under på lyseblå */
+  .ex-hero .bg { height: 280px; background: url(img/hero-banner.jpg) 62% 50% / cover no-repeat; }
+  .ex-hero .bg::after { display: none; }
+  .ex-hero::before { height: 280px; background: linear-gradient(180deg, rgba(223,231,238,0) 0%, rgba(223,231,238,0) 70%, var(--ex-mist) 100%); }
+  .ex-hero .wrap { padding-top: 264px; }
+  /* Kollektionskort: lange navne må ikke ramme kanten */
+  .col-tile .ct strong { font-size: 12px; letter-spacing: .03em; line-height: 1.25; overflow-wrap: anywhere; }
+  /* Club Ditur i den gamle footer: to kolonner i stedet for tre smalle */
+  .footer-classic .club { padding-inline: 0; }
+  .footer-classic .club ul { grid-template-columns: 1fr 1fr; gap: 10px 20px; }
+}
