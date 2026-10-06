@@ -623,7 +623,7 @@ html.dx-intro:not(.dx-intro-open) body { overflow: hidden; }
 .hx-a.on { grid-template-columns: 500px 1fr; }
 .hx-tri { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; padding: 6px 6px 6px 0; }
 .hx-tri img { width: 100%; height: 100%; object-fit: cover; border-radius: 4px; transition: transform .9s cubic-bezier(.22,.61,.36,1); }
-.hx-tri img:nth-child(2) { object-position: 30% 50%; transition-delay: .06s; }
+.hx-tri img:nth-child(2) { object-position: 56% 50%; transition-delay: .06s; }
 .hx-tri img:nth-child(3) { transition-delay: .12s; }
 .hx:hover .hx-tri img { transform: translateY(-4px); }
 .hx:not(:hover) .hx-tri img { transition-delay: 0s; }
