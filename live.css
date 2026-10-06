@@ -659,3 +659,6 @@ html.dx-intro:not(.dx-intro-open) body { overflow: hidden; }
   .footer-classic .club { padding-inline: 0; }
   .footer-classic .club ul { grid-template-columns: 1fr 1fr; gap: 10px 20px; }
 }
+
+/* iPhone/Safari farver knapper systemblå som standard: knapper arver tekstfarven som på desktop */
+button { color: inherit; -webkit-tap-highlight-color: transparent; }
