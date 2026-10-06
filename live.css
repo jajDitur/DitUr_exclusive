@@ -604,3 +604,17 @@ html.dx-intro:not(.dx-intro-open) body { overflow: hidden; }
 }
 
 .hx-a .hx-img img { object-position: 45% 40%; }
+
+/* Mobil-header som på ditur.com: menu-ikon i outlinet firkant, logo, ikoner til højre, søgning under */
+@media (max-width: 760px) {
+  .header-inner { display: grid !important; grid-template-columns: auto 1fr auto; grid-template-areas: "menu logo icons" "search search search"; align-items: center; column-gap: 10px; row-gap: 10px; padding: 10px 12px 12px !important; }
+  .menu-btn { grid-area: menu; width: 38px; height: 38px; padding: 0; justify-content: center; gap: 0; background: transparent; border: 1.5px solid #fff; border-radius: 9px; font-size: 0; color: transparent; }
+  .menu-btn .burger, .menu-btn .burger::before, .menu-btn .burger::after { width: 16px; height: 1.5px; background: #fff; }
+  .menu-btn .burger::before { top: -5px; } .menu-btn .burger::after { top: 5px; }
+  .logo { grid-area: logo; } .logo img { height: 28px; }
+  .header-icons { grid-area: icons; gap: 10px !important; margin: 0; }
+  .header-icons a { padding: 2px; } .header-icons svg { width: 24px; height: 24px; }
+  .search { grid-area: search; order: 0; margin: 0 !important; max-width: none; }
+  .search input { height: 40px; border-radius: 6px; font-size: 15px; padding-right: 44px; }
+  .search span { top: 9px; right: 10px; }
+}
