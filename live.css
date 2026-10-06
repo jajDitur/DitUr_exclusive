@@ -629,3 +629,7 @@ html.dx-intro:not(.dx-intro-open) body { overflow: hidden; }
 .hx:not(:hover) .hx-tri img { transition-delay: 0s; }
 @media (prefers-reduced-motion: reduce) { .hx:hover .hx-tri img { transform: none; } }
 @media (max-width: 900px) { .hx-tri { padding: 6px 6px 0; height: 260px; } }
+
+/* Menu: EXCLUSIVE-punktet i den dybe blå fra Exclusive-designet */
+.mn-exclusive { background: #1f3a52; }
+.mn-exclusive:hover { background: #24445f; }
