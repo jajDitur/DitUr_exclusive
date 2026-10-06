@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Longines - Ditur</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=DM+Sans:wght@400;600&family=Oswald:wght@500&family=Cormorant+Garamond:ital,wght@0,300;0,500;0,700;1,300;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="exclusive-v2.css">
+<link rel="stylesheet" href="live.css">
+</head>
+<body>
+  <div id="topbar"></div>
+  <header id="header"></header>
+  <nav class="crumbs" id="crumbs"></nav>
+
+  <main class="pdp">
+    <div class="pdp-left">
+      <div class="gallery">
+        <div class="thumbs" id="thumbs"></div>
+        <div class="stage" id="stage">
+          <img id="stage-img" alt="">
+          <button type="button" class="nav prev" aria-label="Previous"></button>
+          <button type="button" class="nav next" aria-label="Next"></button>
+          <span class="pc-mm" id="stage-mm"></span>
+        </div>
+      </div>
+
+      <div class="pdp-accs">
+        <div class="acc open">
+          <button type="button">Product description</button>
+          <div class="body" id="desc"></div>
+        </div>
+        <div class="acc">
+          <button type="button">Specifications</button>
+          <div class="body"><table class="specs" id="specs"></table></div>
+        </div>
+        <div class="acc">
+          <button type="button">Delivery &amp; returns</button>
+          <div class="body"><p>Free delivery on this product. Order before 4 pm on weekdays and we ship the same day. You have a full 99-day return policy, and Longines watches are delivered in the original box with international warranty.</p></div>
+        </div>
+      </div>
+    </div>
+
+    <aside class="buy" id="buy"></aside>
+  </main>
+
+  <section class="bento wrap" aria-label="More from Longines">
+    <div class="bento-head"><h3>More from Longines</h3><span>Swipe or use the arrows to explore</span></div>
+    <div class="bento-row" id="bento-1"><div class="bento-track"></div><button type="button" class="bento-nav prev" aria-label="Previous">←</button><button type="button" class="bento-nav next" aria-label="Next">→</button></div>
+    <div class="bento-row" id="bento-2"><div class="bento-track"></div><button type="button" class="bento-nav prev" aria-label="Previous">←</button><button type="button" class="bento-nav next" aria-label="Next">→</button></div>
+  </section>
+
+  <section class="wrap">
+    <div class="brand-story reveal">
+      <img src="img/banner1.jpg" alt="Longines HydroConquest">
+      <div>
+        <p class="k">Ditur Exclusive · Longines</p>
+        <h3>Swiss watchmaking since 1832</h3>
+        <p>Longines is presented at Ditur in a universe of its own, with curated collections, the brand’s own imagery and full service as an authorised retailer.</p>
+        <a href="exclusive.html">Explore the whole Exclusive universe →</a>
+      </div>
+    </div>
+  </section>
+
+  <footer id="footer"></footer>
+
+  <div class="proto-flag">PROTOTYPE · DITUR EXCLUSIVE</div>
+  <script src="app.js"></script>
+  <script src="store.js"></script>
+  <script>
+    const p = byId(new URLSearchParams(location.search).get('id')) || PRODUCTS[0];
+    const silverBracelet = p.strap === 'Steel' && !p.gold;
+    const gallery = [...(p.gallery || [p.img, p.hover, p.col === 'HydroConquest' ? 'img/banner1.jpg' : null].filter(Boolean)), ...(!silverBracelet ? [] : p.col === 'Legend Diver' ? ['img/ld-detail-1.jpg', 'img/ld-detail-2.jpg'] : ['img/bracelet-detail-1.jpg', 'img/bracelet-detail-2.jpg'])];
+    const WARRANTY = [['No thanks', 0], ['1 year', 22], ['2 years', 39], ['3 years', 51], ['4 years', 57], ['5 years', 72]];
+    const EXTRAS = [['Personal engraving', 13, 'img/p4.jpg']];
+    const PI = d => '<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round">' + d + '</svg>';
+    const PACKAGE = [
+      [PI('<path d="M3.5 8 12 4l8.5 4v8.5L12 20.5l-8.5-4z"/><path d="M3.5 8 12 12l8.5-4M12 12v8.5"/>'), 'Original box & papers', 'As from the manufacture in Saint-Imier'],
+      [PI('<path d="M12 3l7.5 3v5.5c0 4.6-3.2 8.3-7.5 9.5-4.3-1.2-7.5-4.9-7.5-9.5V6z"/><path d="m8.8 12.2 2.2 2.2 4.4-4.6"/>'), 'International warranty', 'Registered by an authorised retailer'],
+      [PI('<path d="M2.5 7h11v9h-11zM13.5 10h4l3 3v3h-7z"/><circle cx="6.5" cy="17.5" r="1.6"/><circle cx="17" cy="17.5" r="1.6"/>'), 'Free, insured delivery', '1-2 business days'],
+      [PI('<path d="M19.5 12a7.5 7.5 0 1 1-2.2-5.3"/><path d="M19.8 4.5v4h-4"/>'), '99-day returns', 'Also on Exclusive watches'],
+      [PI('<rect x="4" y="9" width="16" height="11" rx="1"/><path d="M3.5 9h17v3h-17zM12 9v11M12 9c-1.5-4-5-4-5-1.5S12 9 12 9zm0 0c1.5-4 5-4 5-1.5S12 9 12 9z"/>'), 'Gift wrapping', 'Free on Exclusive orders']
+    ];
+    let gi = 0, warranty = 0;
+
+    document.title = `Longines ${p.name} ${p.ref} - Ditur`;
+    document.getElementById('crumbs').innerHTML = `<a href="index.html">Home</a> / <a href="exclusive.html">Exclusive</a> / <a href="exclusive.html">Longines</a> / ${p.name}`;
+
+    function show(i) {
+      gi = (i + gallery.length) % gallery.length;
+      const img = document.getElementById('stage-img'), src = gallery[gi];
+      img.style.opacity = 0;
+      setTimeout(() => { img.src = src; img.className = /p17|p11|g19|g6|col-|banner|bracelet-detail|ld-detail|story|hero/.test(src) ? '' : 'contain'; img.style.opacity = 1; }, 150);
+      document.querySelectorAll('.thumbs button').forEach((b, j) => b.classList.toggle('on', j === gi));
+    }
+    document.getElementById('thumbs').innerHTML = gallery.map((g, i) => `<button type="button" data-i="${i}"><img src="${g}" alt=""></button>`).join('');
+    document.querySelectorAll('.thumbs button').forEach(b => b.addEventListener('click', () => show(+b.dataset.i)));
+    document.querySelector('.nav.prev').innerHTML = document.querySelector('.nav.next').innerHTML = ICONS.chev;
+    document.querySelector('.nav.prev').addEventListener('click', () => show(gi - 1));
+    document.querySelector('.nav.next').addEventListener('click', () => show(gi + 1));
+    document.getElementById('stage-mm').textContent = p.mm + ' mm';
+    show(0);
+
+    const siblings = PRODUCTS.filter(x => x.col === p.col);
+    const models = (siblings.length > 1 ? siblings : PRODUCTS.filter(x => x.gender === p.gender)).slice(0, 5);
+
+    function total() {
+      const extras = [...document.querySelectorAll('.extras input:checked')].map(i => EXTRAS[+i.value]);
+      return { extras: extras.map(([label, price]) => ({ label, price })).concat(warranty ? [{ label: 'Extended warranty ' + WARRANTY[warranty][0], price: WARRANTY[warranty][1] }] : []),
+        sum: p.price + extras.reduce((s, x) => s + x[1], 0) + WARRANTY[warranty][1] };
+    }
+    function refreshCta() {
+      const t = total();
+      document.getElementById('cta').textContent = t.sum === p.price ? 'Add to basket' : `Add to basket · €${kr(t.sum)}`;
+    }
+
+    document.getElementById('buy').innerHTML = `
+      <div class="row1"><span class="ex-tag">Exclusive</span><span class="stars">${ICONS.star.repeat(5)}<span>27 reviews</span></span></div>
+      <h1>Longines</h1>
+      <p class="sub">${p.name} ${p.ref}</p>
+      <p class="price">${kr(p.price)}<small>€</small></p>
+      <p class="klarna">3 payments of €${kr2(p.price / 3)} at 0% interest with <b>Klarna.</b></p>
+      <p class="stock"><span class="dot"></span><span><b>5+ in stock online</b> | Delivery 1-2 days. <b>Free delivery</b> on this product.</span></p>
+      <p class="stock" style="color:#444">In stock in <u>3 stores</u></p>
+      <div class="cta-row">
+        <button type="button" class="btn-primary" id="cta">Add to basket</button>
+        <button type="button" class="btn-wish${wishes().includes(p.id) ? ' on' : ''}" id="wish" aria-label="Save">${ICONS.heart}</button>
+      </div>
+      <a href="#" class="book-link" data-booking="${p.name} ${p.ref}">Book a private viewing in store →</a>
+      <div class="usps">
+        <span>${ICONS.refresh} 99-day returns</span><span>${ICONS.user} Authorised retailer</span>
+        <span>${ICONS.tag} Price match</span><span>${ICONS.star} 4.6 on Trustpilot</span>
+      </div>
+      <h4>Model series</h4>
+      <div class="models">${models.map(m => `<a href="pdp.html?id=${m.id}" class="${m.id === p.id ? 'on' : ''}" title="${m.name} ${m.ref}"><img src="${m.img}" alt=""></a>`).join('')}</div>
+      <h4 style="display:flex;justify-content:space-between">Extended warranty <a href="#" style="font-weight:400;font-size:11px;text-decoration:underline" onclick="toast('Extended warranty covers beyond the Longines international warranty');return false">Read more</a></h4>
+      <div class="warranty">${WARRANTY.map(([l, pr], i) => `<button type="button" data-i="${i}" class="${i ? '' : 'on'}"><b>${l}</b>${pr ? '€' + pr : ''}</button>`).join('')}</div>
+      <div class="package2"><div class="pk-head"><p>Included with your Longines</p><span>Ditur Exclusive</span></div><div class="pk-grid">${PACKAGE.map(([ic, t, d]) => `<div class="pk-item"><i>${ic}</i><b>${t}</b><span>${d}</span></div>`).join('')}</div></div>
+      <div class="extras">${EXTRAS.map(([l, pr, img], i) => `<label>${img ? `<img src="${img}" alt="">` : '<span class="noimg">◇</span>'}${l}<span class="p">+€${pr}</span><input type="checkbox" value="${i}"></label>`).join('')}</div>`;
+
+    document.querySelectorAll('.warranty button').forEach(b => b.addEventListener('click', () => {
+      warranty = +b.dataset.i;
+      document.querySelectorAll('.warranty button').forEach(x => x.classList.toggle('on', x === b));
+      refreshCta();
+    }));
+    document.querySelectorAll('.extras input').forEach(i => i.addEventListener('change', refreshCta));
+    document.getElementById('cta').addEventListener('click', () => { const t = total(); addToCart({ id: p.id, extras: t.extras, total: t.sum }); });
+    document.getElementById('wish').addEventListener('click', e => e.currentTarget.classList.toggle('on', toggleWish(p.id)));
+
+    document.getElementById('desc').innerHTML = `
+      <h5>Longines ${p.name}</h5>
+      <p>${p.name} from Longines combines classic Swiss watchmaking with a timeless, modern expression. A ${p.mm} mm stainless steel case, automatic movement and a finish that suits everyday wear as well as special occasions.</p>
+      <h5>Key features</h5>
+      <ul><li><b>Case:</b> ${p.mm} mm stainless steel</li><li><b>Movement:</b> Automatic, Swiss made</li><li><b>Water resistance:</b> ${p.col === 'HydroConquest' || p.col === 'Legend Diver' ? '30 bar / 300 metres' : '3 bar / 30 metres'}</li><li><b>Strap:</b> ${p.strap === 'Leather' ? 'Leather strap with pin buckle' : 'Stainless steel bracelet'}</li><li><b>Crystal:</b> Sapphire with anti-reflective coating</li></ul>
+      <h5>At Ditur Exclusive</h5>
+      <p>As an authorised Longines retailer we deliver the watch in its original box with international warranty, and you get Ditur’s benefits: 99-day returns, price match and next-day delivery.</p>`;
+    document.getElementById('specs').innerHTML = [['Brand', 'Longines'], ['Collection', p.col], ['Reference', p.ref], ['Diameter', p.mm + ' mm'], ['Gender', p.gender], ['Strap material', p.strap], ['Movement', 'Automatic'], ['Warranty', '2-year international warranty']]
+      .map(([a, b]) => `<tr><td>${a}</td><td>${b}</td></tr>`).join('');
+    document.querySelectorAll('.acc > button').forEach(b => b.addEventListener('click', () => b.parentElement.classList.toggle('open')));
+
+    // Bento-grid: kun Longines, to rækker der kan scrolles vandret
+    const bentoCard = productCard;
+    const bentoWide = (id, img) => { const x = byId(id); return `<a class="bcard bcard--wide" href="pdp.html?id=${x.id}">
+      <img src="${img}" alt="Longines ${x.name}" loading="lazy"><span class="pc-tag">Exclusive</span>
+      <button type="button" class="pc-wish${wishes().includes(x.id) ? ' on' : ''}" data-id="${x.id}" aria-label="Save">${ICONS.heart}</button>
+      <span class="bw-text"><b>Longines ${x.name}</b><em>${eur(x.price)}</em></span><span class="pc-mm">${x.mm} mm</span></a>`; };
+    const pool = PRODUCTS.filter(x => x.id !== p.id && !x.cover).sort((a, b) => (b.col === p.col) - (a.col === p.col) || a.pop - b.pop);
+    const r1 = pool.filter((_, i) => i % 2 === 0), r2 = pool.filter((_, i) => i % 2 === 1);
+    const row1 = [...r1.slice(0, 3).map(bentoCard), bentoWide('hydroconquest-blue', 'img/col-hydroconquest.jpg'), ...r1.slice(3).map(bentoCard), bentoWide('legend-diver-l3764066', 'img/col-legend-diver.jpg')];
+    const row2 = [bentoWide('hydroconquest-ice-ee', 'img/hero.jpg'), ...r2.slice(0, 3).map(bentoCard), bentoWide('dolcevita-steel', 'img/story-dolcevita.jpg'), ...r2.slice(3).map(bentoCard)];
+    [['bento-1', row1], ['bento-2', row2]].forEach(([id, items]) => {
+      const row = document.getElementById(id), track = row.querySelector('.bento-track');
+      track.innerHTML = items.join('');
+      const pre = new URLSearchParams(location.search).get(id === 'bento-1' ? 'b1' : 'b2');
+      if (pre) addEventListener('load', () => { track.style.scrollSnapType = 'none'; track.scrollLeft = +pre; });
+      bindWish(track);
+      const step = () => track.clientWidth * .6;
+      row.querySelector('.prev').addEventListener('click', () => track.scrollBy({ left: -step(), behavior: 'smooth' }));
+      row.querySelector('.next').addEventListener('click', () => track.scrollBy({ left: step(), behavior: 'smooth' }));
+      let down = false, sx = 0, sl = 0, moved = false;
+      track.addEventListener('pointerdown', e => { if (e.pointerType !== 'mouse') return; down = true; moved = false; sx = e.clientX; sl = track.scrollLeft; });
+      addEventListener('pointermove', e => { if (!down) return; const d = e.clientX - sx; if (Math.abs(d) > 4) { moved = true; track.classList.add('dragging'); } track.scrollLeft = sl - d; });
+      addEventListener('pointerup', () => { down = false; setTimeout(() => track.classList.remove('dragging'), 0); });
+      track.addEventListener('click', e => { if (moved) { e.preventDefault(); moved = false; } }, true);
+      track.addEventListener('dragstart', e => e.preventDefault());
+    });
+    if (new URLSearchParams(location.search).get('booking')) addEventListener('load', () => { openBooking(p.name + ' ' + p.ref); const m = document.getElementById('booking'); m.style.transition = 'none'; document.body.insertAdjacentHTML('beforeend', '<div style="position:fixed;inset:0;background:rgba(14,19,22,.55);z-index:74"></div>'); m.querySelector('.modal-card').style.transition = 'none'; document.querySelector('.proto-flag')?.remove(); });
+  </script>
+</body>
+</html>

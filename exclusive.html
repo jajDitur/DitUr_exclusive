@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Exclusive - Ditur</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=DM+Sans:wght@400;600&family=Oswald:wght@500&family=Cormorant+Garamond:ital,wght@0,300;0,500;0,700;1,300;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="exclusive-v2.css">
+<link rel="stylesheet" href="live.css">
+<script>
+  /* Intro: vises når man kommer ind i Exclusive udefra (ikke ved interne links), kan tvinges med ?intro=1 */
+  (function () {
+    var q = new URLSearchParams(location.search);
+    var fromInside = /exclusive\.html/.test(document.referrer);
+    var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (q.get('intro') === '0') return;
+    if ((q.get('intro') === '1' || !fromInside) && !reduce) document.documentElement.classList.add('dx-intro');
+  })();
+</script>
+</head>
+<body>
+  <div class="intro" id="intro" aria-hidden="true">
+    <div class="intro-half intro-top"></div>
+    <div class="intro-half intro-bottom"></div>
+    <div class="intro-dial">
+      <svg viewBox="0 0 160 160" width="160" height="160">
+        <circle cx="80" cy="80" r="70" fill="none" stroke="currentColor" stroke-width="1" opacity=".35"/>
+        <circle class="intro-ring" cx="80" cy="80" r="70" fill="none" stroke="currentColor" stroke-width="1.2" pathLength="360" transform="rotate(-90 80 80)"/>
+        <g id="intro-ticks" stroke="currentColor"></g>
+        <line class="intro-hand" x1="80" y1="92" x2="80" y2="18" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+        <circle cx="80" cy="80" r="3" fill="currentColor"/>
+      </svg>
+      <p>Ditur Exclusive</p>
+    </div>
+  </div>
+  <div id="topbar"></div>
+  <header id="header"></header>
+
+  <section class="ex-hero">
+    <div class="bg" id="hero-bg"></div>
+    <div class="wrap">
+      <div class="hero-copy">
+        <p class="eyebrow">Ditur Exclusive · Longines</p>
+        <h1>Exclusive</h1>
+        <p class="serif-sub">Time worth passing on.</p>
+        <p class="lead">A curated selection of Swiss watches, presented in the brand’s own expression. With Ditur’s service, price match and 99-day returns.</p>
+        <div class="hero-ctas">
+          <a href="#plp" class="btn-light">Explore the collections <span>→</span></a>
+          <a href="#" class="btn-ghost" data-booking="">Book a private viewing</a>
+        </div>
+      </div>
+      <div class="collections">
+        <button type="button" class="col-tile reveal" data-col="Conquest"><img src="img/col-conquest-heritage.jpg" alt=""><span class="ct"><em>01</em><strong>Conquest Heritage</strong><small>Classic elegance with a 1950s heritage</small><i>Explore →</i></span></button>
+        <button type="button" class="col-tile reveal" data-col="HydroConquest"><img src="img/col-hydroconquest.jpg" alt=""><span class="ct"><em>02</em><strong>HydroConquest</strong><small>A diver’s watch built for everyday and the sea</small><i>Explore →</i></span></button>
+        <button type="button" class="col-tile reveal" data-col="Legend Diver"><img src="img/col-legend-diver.jpg" alt=""><span class="ct"><em>03</em><strong>Legend Diver</strong><small>An iconic diver with vintage soul</small><i>Explore →</i></span></button>
+      </div>
+      <p class="scroll-hint">Scroll to see all 20 watches</p>
+    </div>
+  </section>
+
+  <section class="usp-band">
+    <div class="usp-inner">
+      <div><svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M12 3l7.5 3v5.5c0 4.6-3.2 8.3-7.5 9.5-4.3-1.2-7.5-4.9-7.5-9.5V6z"/><path d="m8.8 12.2 2.2 2.2 4.4-4.6"/></svg><p><b>Authorised Longines retailer</b><span>Genuine watches with international warranty</span></p></div>
+      <div><svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M3.5 8 12 4l8.5 4v8.5L12 20.5l-8.5-4z"/><path d="M3.5 8 12 12l8.5-4M12 12v8.5"/></svg><p><b>Original box and papers</b><span>Delivered as from the manufacture</span></p></div>
+      <div><svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.2"><circle cx="12" cy="8" r="3.8"/><path d="M4.5 20c.8-3.6 3.8-5.8 7.5-5.8s6.7 2.2 7.5 5.8"/></svg><p><b>Personal advice</b><span>Book a viewing in store</span></p></div>
+      <div><svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M19.5 12a7.5 7.5 0 1 1-2.2-5.3"/><path d="M19.8 4.5v4h-4"/></svg><p><b>99-day returns</b><span>Free and insured delivery</span></p></div>
+    </div>
+  </section>
+
+  <section class="plp" id="plp">
+    <aside class="filters" id="filters">
+      <div class="close-f"><h2 style="margin:0">Filters</h2><button type="button" id="close-filters" aria-label="Close"></button></div>
+      <h2>Exclusive</h2>
+      <div class="chosen"><b>Selected filters</b><p id="chosen-hint">Your selected filters will appear here.</p><div class="chips" id="chips"></div></div>
+      <div id="facets"></div>
+    </aside>
+    <div>
+      <div class="plp-bar">
+        <button type="button" class="filter-btn" id="open-filters">Filter</button>
+        <span id="count"></span>
+        <label><b style="font-weight:600">Sort by:</b>
+          <select id="sort">
+            <option value="pop">Most popular</option>
+            <option value="new">New in</option>
+            <option value="asc">Price: low to high</option>
+            <option value="desc">Price: high to low</option>
+          </select>
+        </label>
+      </div>
+      <div class="grid" id="grid"></div>
+      <div class="pagination"><span>‹</span><span class="on">1</span><span>2</span><span>3</span><span>›</span></div>
+    </div>
+  </section>
+
+  <section class="film" aria-label="Longines film">
+    <div class="film-inner reveal">
+      <video id="film" poster="img/film-poster.jpg" src="https://cms.longines.com/media/2499/download/01_Product_16x9_MASTER.mp4?v=1" autoplay muted loop playsinline preload="metadata"></video>
+      <div class="film-ui">
+        <p class="eyebrow">Longines · In motion</p>
+        <div class="film-btns">
+          <button type="button" id="film-play" aria-label="Pause">Pause</button>
+          <button type="button" id="film-sound" aria-label="Sound on">Sound on</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <section class="viewing" id="viewing">
+    <div class="viewing-card reveal">
+      <img src="img/p17.jpg" alt="Longines on the wrist">
+      <div>
+        <p class="eyebrow">Private viewing</p>
+        <h2>See the watch on your wrist before you decide.</h2>
+        <p>Book a viewing in one of our stores. We will have the watch ready, so you can try it at your own pace with one of our watch specialists.</p>
+        <ol class="steps"><li><i>1</i>Choose a watch</li><li><i>2</i>Pick a day and time</li><li><i>3</i>The watch is ready</li></ol>
+        <div class="viewing-cta"><a href="#" class="btn-ink" data-booking="">Book a viewing <span>→</span></a><small>Free and without obligation</small></div>
+      </div>
+    </div>
+  </section>
+
+  <footer id="footer"></footer>
+
+  <div class="proto-flag">PROTOTYPE · DITUR EXCLUSIVE</div>
+  <script>
+    /* Intro: minutstreger, vent på sekundviser + heltebillede, åbn tæppet */
+    (function () {
+      var root = document.documentElement, el = document.getElementById('intro');
+      if (!root.classList.contains('dx-intro')) { el.remove(); return; }
+      var g = document.getElementById('intro-ticks'), ns = 'http://www.w3.org/2000/svg';
+      for (var i = 0; i < 60; i++) { var l = document.createElementNS(ns, 'line'), big = i % 5 === 0;
+        l.setAttribute('x1', 80); l.setAttribute('y1', big ? 14 : 17); l.setAttribute('x2', 80); l.setAttribute('y2', 21);
+        l.setAttribute('stroke-width', big ? 1.4 : .6); l.setAttribute('opacity', big ? .9 : .45);
+        l.setAttribute('transform', 'rotate(' + i * 6 + ' 80 80)'); g.appendChild(l); }
+      var opened = false, sweep = false, img = false;
+      function open() { if (opened) return; opened = true; root.classList.add('dx-intro-open'); setTimeout(function () { el.remove(); root.classList.remove('dx-intro', 'dx-intro-open'); }, 900); }
+      function maybe() { if (sweep && img) open(); }
+      setTimeout(function () { sweep = true; maybe(); }, 1250);
+      var h = new Image(); h.onload = h.onerror = function () { img = true; maybe(); }; h.src = 'img/hero.jpg';
+      setTimeout(open, 3000);
+      el.addEventListener('click', open);
+      addEventListener('keydown', function (e) { if (e.key === 'Escape' || e.key === 'Enter' || e.key === ' ') open(); });
+    })();
+  </script>
+  <script src="app.js"></script>
+  <script src="store.js"></script>
+  <script>
+    const FACETS = [
+      { key: 'col', label: 'Collection', open: true },
+      { key: 'price', label: 'Price', ranges: [[0, 2000, 'Under €2,000'], [2000, 2700, '€2,000 - 2,700'], [2700, 3300, '€2,700 - 3,300'], [3300, 1e9, 'Over €3,300']] },
+      { key: 'gender', label: 'Gender' },
+      { key: 'mm', label: 'Diameter', ranges: [[0, 30, 'Under 30 mm'], [30, 38, '30 - 37 mm'], [38, 41, '38 - 40 mm'], [41, 99, '41 mm and above']] },
+      { key: 'strap', label: 'Strap material' }
+    ];
+    const state = { f: {}, sort: 'pop' };
+    const val = (p, k) => k === 'price' ? p.price : p[k];
+
+    function matches(p, skip) {
+      return FACETS.every(fc => {
+        if (fc.key === skip) return true;
+        const sel = state.f[fc.key]; if (!sel || !sel.length) return true;
+        if (fc.ranges) return sel.some(i => { const r = fc.ranges[i]; return val(p, fc.key) >= r[0] && val(p, fc.key) < r[1]; });
+        return sel.includes(p[fc.key]);
+      });
+    }
+
+    function renderFacets() {
+      const open = new Set([...document.querySelectorAll('.facet.open')].map(e => e.dataset.k));
+      document.getElementById('facets').innerHTML = FACETS.map(fc => {
+        const pool = PRODUCTS.filter(p => matches(p, fc.key));
+        const opts = fc.ranges ? fc.ranges.map((r, i) => [i, r[2], pool.filter(p => val(p, fc.key) >= r[0] && val(p, fc.key) < r[1]).length])
+          : [...new Set(PRODUCTS.map(p => p[fc.key]))].sort().map(v => [v, v, pool.filter(p => p[fc.key] === v).length]);
+        const sel = state.f[fc.key] || [];
+        const isOpen = open.size ? open.has(fc.key) : fc.open;
+        return `<div class="facet${isOpen ? ' open' : ''}" data-k="${fc.key}">
+          <button type="button">${fc.label}<span class="ic">${ICONS.chev}</span></button>
+          <ul>${opts.map(([v, l, n]) => `<li><label><input type="checkbox" data-k="${fc.key}" value="${v}" ${sel.includes(v) ? 'checked' : ''} ${!n && !sel.includes(v) ? 'disabled' : ''}>${l}<span class="n">${n}</span></label></li>`).join('')}</ul></div>`;
+      }).join('');
+      document.querySelectorAll('.facet > button').forEach(b => b.addEventListener('click', () => b.parentElement.classList.toggle('open')));
+      document.querySelectorAll('.facet input').forEach(i => i.addEventListener('change', () => {
+        const k = i.dataset.k, v = FACETS.find(f => f.key === k).ranges ? +i.value : i.value;
+        const s = state.f[k] = state.f[k] || [];
+        i.checked ? s.push(v) : s.splice(s.indexOf(v), 1);
+        update();
+      }));
+    }
+
+    function renderChips() {
+      const chips = [];
+      FACETS.forEach(fc => (state.f[fc.key] || []).forEach(v => chips.push([fc.key, v, fc.ranges ? fc.ranges[v][2] : v])));
+      document.getElementById('chosen-hint').style.display = chips.length ? 'none' : '';
+      document.getElementById('chips').innerHTML = chips.map(([k, v, l]) => `<button type="button" class="chip" data-k="${k}" data-v="${v}">${l} ✕</button>`).join('')
+        + (chips.length ? '<button type="button" class="chip-clear" id="clear-all">Clear all</button>' : '');
+      document.querySelectorAll('.chip').forEach(c => c.addEventListener('click', () => {
+        const s = state.f[c.dataset.k], v = FACETS.find(f => f.key === c.dataset.k).ranges ? +c.dataset.v : c.dataset.v;
+        s.splice(s.indexOf(v), 1); update();
+      }));
+      document.getElementById('clear-all')?.addEventListener('click', () => { state.f = {}; update(); });
+    }
+
+    function renderGrid() {
+      let list = PRODUCTS.filter(p => matches(p));
+      const s = state.sort;
+      list.sort((a, b) => s === 'asc' ? a.price - b.price : s === 'desc' ? b.price - a.price : s === 'new' ? (b.tag === 'New') - (a.tag === 'New') || a.pop - b.pop : a.pop - b.pop);
+      const cards = list.map(productCard);
+      if (cards.length > 7) cards.splice(8, 0, `<a class="story-tile story-dolcevita" href="#plp" data-col="DolceVita"><img src="img/story-dolcevita.jpg" alt="Longines DolceVita in steel on the wrist"><div><p>Longines · DolceVita</p><h3>Elegance is an attitude</h3><span>See the collection</span></div></a>`);
+      if (cards.length > 15) cards.splice(15, 0, `<a class="story-tile story-dolcevita story-legend" href="#plp" data-col="Legend Diver"><img src="img/col-legend-diver.jpg" alt="Longines Legend Diver by the sea"><div><p>Longines · Legend Diver</p><h3>Made for the deep</h3><span>See the collection</span></div></a>`);
+      const grid = document.getElementById('grid');
+      grid.innerHTML = cards.join('') || '<p class="empty">No watches match your filters.</p>';
+      bindWish(grid);
+      document.getElementById('count').textContent = list.length + ' items';
+      document.querySelectorAll('.col-tile').forEach(t => t.classList.toggle('active', (state.f.col || []).length === 1 && state.f.col[0] === t.dataset.col));
+    }
+
+    function update() { renderFacets(); renderChips(); renderGrid(); }
+
+    document.getElementById('sort').addEventListener('change', e => { state.sort = e.target.value; renderGrid(); });
+    document.querySelectorAll('.col-tile').forEach(t => t.addEventListener('click', () => {
+      const on = t.classList.contains('active');
+      state.f.col = on ? [] : [t.dataset.col];
+      update();
+      if (!on) document.getElementById('plp').scrollIntoView({ behavior: 'smooth' });
+    }));
+    document.getElementById('open-filters').addEventListener('click', () => document.body.classList.add('filters-open'));
+    const cf = document.getElementById('close-filters'); cf.innerHTML = ICONS.close;
+    cf.addEventListener('click', () => document.body.classList.remove('filters-open'));
+
+    document.getElementById('grid').addEventListener('click', e => {
+      const st = e.target.closest('.story-tile[data-col]'); if (!st) return;
+      e.preventDefault(); state.f.col = [st.dataset.col]; update();
+      document.getElementById('plp').scrollIntoView({ behavior: 'smooth' });
+    });
+
+    const film = document.getElementById('film'), fp = document.getElementById('film-play'), fs2 = document.getElementById('film-sound');
+    fp.addEventListener('click', () => { film.paused ? film.play() : film.pause(); fp.textContent = film.paused ? 'Play' : 'Pause'; });
+    fs2.addEventListener('click', () => { film.muted = !film.muted; fs2.textContent = film.muted ? 'Sound on' : 'Sound off'; });
+
+    update();
+  </script>
+</body>
+</html>
